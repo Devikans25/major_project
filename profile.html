@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | Travel Planner</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <h2>User Profile</h2>
+            <div class="profile-pic-container">
+                <img id="profilePic" src="default-profile.png" alt="Profile Picture">
+                <input type="file" id="uploadPic" accept="image/*" hidden>
+                <button onclick="document.getElementById('uploadPic').click()">Change Picture</button>
+            </div>
+            
+            <div class="profile-details">
+                <label for="name">Name:</label>
+                <input type="text" id="name" disabled>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" disabled>
+
+                <button id="editProfile">Edit Profile</button>
+                <button id="saveProfile" style="display: none;">Save Changes</button>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+
+            if (user) {
+                document.getElementById("name").value = user.name || "";
+                document.getElementById("email").value = user.email || "";
+                document.getElementById("profilePic").src = user.profilePic || "default-profile.png";
+            } else {
+                alert("No user found! Redirecting to login...");
+                window.location.href = "login.html";
+            }
+        });
+
+        document.getElementById("editProfile").addEventListener("click", function() {
+            document.getElementById("name").disabled = false;
+            document.getElementById("saveProfile").style.display = "block";
+            this.style.display = "none";
+        });
+
+        document.getElementById("saveProfile").addEventListener("click", function() {
+            let updatedName = document.getElementById("name").value;
+
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+            user.name = updatedName;
+            localStorage.setItem("currentUser", JSON.stringify(user));
+
+            document.getElementById("name").disabled = true;
+            document.getElementById("editProfile").style.display = "block";
+            this.style.display = "none";
+            alert("Profile updated successfully!");
+        });
+
+        document.getElementById("uploadPic").addEventListener("change", function(event) {
+            let reader = new FileReader();
+            reader.onload = function() {
+                let user = JSON.parse(localStorage.getItem("currentUser"));
+                user.profilePic = reader.result;
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                document.getElementById("profilePic").src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>

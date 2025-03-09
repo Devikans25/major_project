@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Travel Planner</title>
+    <link rel="stylesheet" href="settings.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="settings-container">
+        <h2>Account Settings</h2>
+        <form id="settingsForm">
+            <label for="profilePic">Profile Picture:</label>
+            <input type="file" id="profilePic" accept="image/*">
+            <img id="previewPic" src="default-profile.png" alt="Profile Picture" class="profile-pic">
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" readonly>
+
+            <label for="password">New Password:</label>
+            <input type="password" id="password" placeholder="Enter new password">
+
+            <button type="submit">Save Changes</button>
+        </form>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let user = JSON.parse(localStorage.getItem("currentUser"));
+
+            if (user) {
+                document.getElementById("name").value = user.name || "";
+                document.getElementById("email").value = user.email || "";
+                document.getElementById("previewPic").src = user.profilePic || "default-profile.png";
+            }
+
+            document.getElementById("profilePic").addEventListener("change", function (event) {
+                let file = event.target.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById("previewPic").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById("settingsForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                if (!user) return;
+
+                user.name = document.getElementById("name").value;
+                if (document.getElementById("password").value) {
+                    user.password = document.getElementById("password").value;
+                }
+                let profilePic = document.getElementById("previewPic").src;
+                if (profilePic !== "default-profile.png") {
+                    user.profilePic = profilePic;
+                }
+
+                localStorage.setItem("currentUser", JSON.stringify(user));
+
+                let users = JSON.parse(localStorage.getItem("users")) || [];
+                let index = users.findIndex(u => u.email === user.email);
+                if (index !== -1) {
+                    users[index] = user;
+                    localStorage.setItem("users", JSON.stringify(users));
+                }
+
+                alert("Profile updated successfully!");
+            });
+        });
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>
