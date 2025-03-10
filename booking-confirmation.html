@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <link rel="stylesheet" href="book.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Booking Confirmation</h1>
+    </header>
+
+    <section class="confirmation-details">
+        <h2>Thank You for Your Booking!</h2>
+        <p id="homestay-name"></p>
+        <p id="booking-price"></p>
+        <p>Payment Method: <span id="payment-method"></span></p>
+
+        <p>You are being redirected to the payment page...</p>
+
+        <!-- Bank Details Form (Hidden by Default) -->
+        <section id="bank-details-form" style="display: none;">
+            <h3>Enter Your Bank Details</h3>
+            <label for="account-name">Account Holder Name:</label>
+            <input type="text" id="account-name" placeholder="Enter Name" required>
+        
+            <label for="account-number">Account Number:</label>
+            <input type="text" id="account-number" placeholder="Enter Account Number" required>
+        
+            <label for="ifsc-code">IFSC Code:</label>
+            <input type="text" id="ifsc-code" placeholder="Enter IFSC Code" required>
+        
+            <button onclick="submitBankDetails()">Proceed with Payment</button>
+        </section>
+
+        <button onclick="goToHome()">Return to Home</button>
+    </section>
+
+    <script>
+        // Retrieve booking details
+        document.getElementById("homestay-name").innerText = sessionStorage.getItem("homestayName") || "Unknown Homestay";
+        document.getElementById("booking-price").innerText = "Total Price: " + (sessionStorage.getItem("totalPrice") || "Not Available");
+        
+        let selectedPayment = sessionStorage.getItem("selectedPayment");
+        document.getElementById("payment-method").innerText = selectedPayment || "Not Selected";
+
+        // Show bank details form for "Bank Transfer"
+        if (selectedPayment === "Bank Transfer") {
+            document.getElementById("bank-details-form").style.display = "block";
+        } else {
+            setTimeout(() => {
+                if (selectedPayment === "GPay") {
+                    window.location.href = "https://pay.google.com/";
+                } else if (selectedPayment === "Paytm") {
+                    window.location.href = "https://paytm.com/";
+                } else if (selectedPayment === "Credit Card") {
+                    window.location.href = "https://www.visa.com/";
+                } else if (selectedPayment === "UPI") {
+                    alert("Proceeding with UPI payment.");
+                }
+            }, 3000);
+        }
+
+        // Validate and submit bank details
+        function submitBankDetails() {
+            let accountName = document.getElementById("account-name").value.trim();
+            let accountNumber = document.getElementById("account-number").value.trim();
+            let ifscCode = document.getElementById("ifsc-code").value.trim();
+
+            if (!accountName || !accountNumber || !ifscCode) {
+                alert("Please enter all bank details!");
+                return;
+            }
+
+            alert("Bank details submitted! Processing your payment...");
+            window.location.href = "bank-payment-confirmation.html";
+        }
+
+        function goToHome() {
+            window.location.href = "index.html"; // Redirect to homepage
+        }
+    </script>
+</body>
+</html>

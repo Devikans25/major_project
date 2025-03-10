@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Header Styling */
+.header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+}
+
+/* Confirmation Details Section */
+.confirmation-details {
+    background: white;
+    margin: 30px auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.confirmation-details h2 {
+    color: #333;
+}
+
+.confirmation-details p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Bank Details Form */
+#bank-details-form {
+    display: none;
+    background: white;
+    margin: 20px auto;
+    padding: 20px;
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#bank-details-form h3 {
+    color: #444;
+}
+
+#bank-details-form label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+#bank-details-form input {
+    width: 90%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#bank-details-form button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+#bank-details-form button:hover {
+    background-color: #218838;
+}
+
+/* Return to Home Button */
+button {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #c70039;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .confirmation-details, #bank-details-form {
+        width: 80%;
+    }
+}

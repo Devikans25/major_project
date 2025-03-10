@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaipur - Travel & Booking</title>
+    <link rel="stylesheet" href="jaipur.css">
+
+    <script defer src="script.js"></script> <!-- External JS File -->
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Jaipur, Rajasthan</h1>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="jaipur1.jpg" alt="Jaipur">
+        <p>Discover the beauty of the Pink City, known for its grand palaces and rich heritage.</p>
+    </section>
+
+    <!-- Top Attractions -->
+    <section class="attractions">
+        <div class="tourist-attractions">
+            <div class="Attractions">
+                <img src="jai1.jpg" alt="City Palace">
+                <h3>🏛️ City Palace</h3>
+                <p>founded in 1727 by Maharaja Sawai Jai Singh II as part of his ambitious city project</p>
+            </div>
+            <div class="Attractions">
+                <img src="jai2.jpg" alt="Amber Fort">
+                <h3>🏯 Amber Fort</h3>
+                <p>Located high on a hill, it is the principal tourist attraction in Jaipur. ..</p>
+            </div>
+            <div class="Attractions">
+                <img src="jai3.jpg" alt="Jantar Mantar">
+                <h3>🌌 Jantar Mantar</h3>
+                <p>instruments for measuring the harmony of the heavens</p>
+            </div>
+            <div class="Attractions">
+                <img src="jai4.jpg" alt="Jal Mahal">
+                <h3>🌊 Jal Mahal</h3>
+                <p>a palace in the middle of the Man Sagar Lake in Jaipur city</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Homestay Booking Section -->
+    <section class="homestay">
+        <h2>Best Homestays in Jaipur</h2>
+        <div class="homestay-grid">
+            <div class="homestay-card">
+                <img src="homestay1.jpg" alt="Royal Heritage Stay">
+                <h3>Royal Heritage Stay</h3>
+                <p>Luxury stay with a palace-like experience.</p>
+                <button onclick="openBookingForm('Royal Heritage Stay', 4000)">Book Now</button>
+            </div>
+            <div class="homestay-card">
+                <img src="homestay2.jpg" alt="Jaipur Haveli">
+                <h3>Jaipur Haveli</h3>
+                <p>A charming haveli with traditional Rajasthani decor.</p>
+                <button onclick="openBookingForm('Jaipur Haveli', 5000)">Book Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form (Initially Hidden) -->
+    <section id="booking-section" class="booking-section" style="display: none;">
+        <h2>Book Your Stay</h2>
+        <div class="booking-details">
+            <h3 id="selected-homestay">Homestay: </h3>
+            <p id="homestay-price"></p>
+
+            <label>Check-in Date:</label>
+            <input type="date" id="checkin-date">
+            
+            <label>Check-out Date:</label>
+            <input type="date" id="checkout-date">
+
+            <label>Number of Guests:</label>
+            <input type="number" id="guests" min="1" value="1">
+
+            <h3>Total Nights: <span id="total-nights">0</span></h3>
+            <h3>Total Price: <span id="total-price">₹0</span></h3>
+
+            <h2>Select Payment Method</h2>
+            <div class="payment-options">
+                <button onclick="selectPayment('GPay')">Google Pay</button>
+                <button onclick="selectPayment('Paytm')">Paytm</button>
+                <button onclick="selectPayment('Credit Card')">Credit Card</button>
+                <button onclick="selectPayment('UPI')">UPI</button>
+            </div>
+
+            <button onclick="confirmBooking()">Confirm Booking</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Jaipur Travel Guide</p>
+    </footer>
+
+    <script>
+        // Function to open the booking form
+function openBookingForm(homestayName, homestayPrice) {
+    document.getElementById("selected-homestay").innerText = "Homestay: " + homestayName;
+    document.getElementById("homestay-price").innerText = "₹" + homestayPrice;
+    document.getElementById("booking-section").style.display = "block";
+    document.getElementById("checkin-date").value = "";
+    document.getElementById("checkout-date").value = "";
+    document.getElementById("guests").value = 1;
+    document.getElementById("total-nights").innerText = "0";
+    document.getElementById("total-price").innerText = "₹0";
+}
+
+// Function to calculate total price
+document.getElementById("checkout-date").addEventListener("change", calculateTotalPrice);
+document.getElementById("checkin-date").addEventListener("change", calculateTotalPrice);
+document.getElementById("guests").addEventListener("input", calculateTotalPrice);
+
+function calculateTotalPrice() {
+    let checkinDate = new Date(document.getElementById("checkin-date").value);
+    let checkoutDate = new Date(document.getElementById("checkout-date").value);
+    let guests = parseInt(document.getElementById("guests").value);
+    let homestayPrice = parseInt(document.getElementById("homestay-price").innerText.replace("₹", ""));
+
+    if (isNaN(homestayPrice) || checkinDate == "Invalid Date" || checkoutDate == "Invalid Date") {
+        document.getElementById("total-nights").innerText = "0";
+        document.getElementById("total-price").innerText = "₹0";
+        return;
+    }
+
+    let timeDiff = checkoutDate - checkinDate;
+    let totalNights = timeDiff / (1000 * 3600 * 24);
+
+    if (totalNights > 0) {
+        document.getElementById("total-nights").innerText = totalNights;
+        let totalPrice = totalNights * homestayPrice * guests;
+        document.getElementById("total-price").innerText = "₹" + totalPrice;
+    } else {
+        document.getElementById("total-nights").innerText = "0";
+        document.getElementById("total-price").innerText = "₹0";
+    }
+}
+
+// Function to select a payment method
+let selectedPayment = "";
+
+function selectPayment(method) {
+    selectedPayment = method;
+    alert(method + " selected for payment.");
+}
+
+// Function to confirm booking with payment
+function confirmBooking() {
+    if (selectedPayment === "") {
+        alert("Please select a payment method before confirming.");
+        return;
+    }
+
+    let checkinDate = document.getElementById("checkin-date").value;
+    let checkoutDate = document.getElementById("checkout-date").value;
+    let totalPrice = document.getElementById("total-price").innerText;
+
+    if (!checkinDate || !checkoutDate || totalPrice === "₹0") {
+        alert("Please enter valid booking details.");
+        return;
+    }
+
+    // Simulate payment gateway process
+    if (selectedPayment === "GPay") {
+        window.open("https://pay.google.com/", "_blank");
+    } else if (selectedPayment === "Paytm") {
+        window.open("https://paytm.com/", "_blank");
+    } else if (selectedPayment === "Credit Card") {
+        window.open("https://www.visa.com/", "_blank");
+    } else if (selectedPayment === "UPI") {
+        alert("Proceeding with UPI payment.");
+    }
+
+    alert("Booking confirmed! Details will be sent to your email.");
+}
+
+    </script>
+</body>
+</html>
