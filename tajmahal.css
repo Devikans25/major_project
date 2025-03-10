@@ -7,48 +7,31 @@ body {
     color: #333;
 }
 
-h1, h2, h3 {
-    text-align: center;
-}
-
 /* Header */
 .header {
-    background-color: #333;
-    color: white;
-    padding: 15px 0;
-    text-align: center;
-}
-
-/* Hero Section */
-.hero {
+    background-color: grey;
+    color: black;
     text-align: center;
     padding: 20px;
-    background-color: white;
+    font-size: 24px;
 }
 
-.hero img {
-    width: 80%;
-    max-width: 600px;
-    border-radius: 10px;
-}
-
-/* Gallery */
+/* Gallery Section */
 .gallery {
     text-align: center;
     padding: 20px;
 }
-
 .image-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 20px;
 }
-
-.image-grid img {
-    width: 200px;
+.image-item img {
+    width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 /* Video Section */
@@ -56,137 +39,79 @@ h1, h2, h3 {
     text-align: center;
     padding: 20px;
 }
-
-iframe {
-    max-width: 100%;
-    border-radius: 10px;
-}
-
-/* Homestay Section */
-.homestay {
-    text-align: center;
-    padding: 20px;
-}
-
-.homestay-grid {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.homestay-card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 250px;
-}
-
-.homestay-card img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.homestay-card button {
-    background: #333;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.homestay-card button:hover {
-    background: #555;
-}
-
-/* Booking Section */
-.booking-section {
-    background: white;
-    padding: 20px;
-    margin: 20px auto;
+.video-container iframe {
     width: 80%;
-    max-width: 500px;
+    height: 400px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.booking-details {
+/* Hotel Section */
+.hotel-list {
+    padding: 20px;
     text-align: center;
 }
-
-.booking-details input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.booking-details button {
-    width: 100%;
-    padding: 10px;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.booking-details button:hover {
-    background: #218838;
-}
-
-/* Payment Section */
-.payment-options {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.payment-options button {
+.hotel {
     background: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
+    padding: 20px;
+    margin: 15px auto;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-
-.payment-options button img {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-.payment-options button:hover {
-    background: #f8f9fa;
-}
-
-#place-order-btn {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
+.hotel button {
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px 15px;
     cursor: pointer;
+    border-radius: 5px;
+}
+.hotel button:hover {
+    background-color: #45a049;
+}
+
+/* Modal Styles */
+.modal {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
-
-#place-order-btn:hover {
-    background: #0056b3;
-}
-
-/* Footer */
-footer {
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
     text-align: center;
+}
+.modal-content input, .modal-content select {
+    width: 90%;
     padding: 10px;
-    background: #333;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.modal-content button {
+    background-color: #4CAF50;
     color: white;
-    margin-top: 20px;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.modal-content button:hover {
+    background-color: #45a049;
+}
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
 }
