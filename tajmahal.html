@@ -53,48 +53,59 @@
         </div>
     </section>
 
-    <!-- Booking Section -->
     <section id="booking-section" class="booking-section" style="display: none;">
         <h2>Book Your Stay</h2>
         <div class="booking-details">
             <h3 id="selected-homestay">Homestay: </h3>
             <p id="homestay-price"></p>
-
+    
             <label>Check-in Date:</label>
             <input type="date" id="checkin-date">
-
+    
             <label>Check-out Date:</label>
             <input type="date" id="checkout-date">
-
+    
             <label>Number of Guests:</label>
             <input type="number" id="guests" min="1" value="1">
-
-        
+    
             <h3>Total Nights: <span id="total-nights">0</span></h3>
             <h3>Total Price: <span id="total-price">₹0</span></h3>
-
-            <h2>Select Payment Method</h2>
-            <div class="payment-options">
-                <button onclick="selectPayment('GPay')">Google Pay</button>
-                <button onclick="selectPayment('Paytm')">Paytm</button>
-                <button onclick="selectPayment('Credit Card')">Credit Card</button>
-                <button onclick="selectPayment('UPI')">UPI</button>
-            </div>
-
+    
             <button onclick="confirmBooking()">Confirm Booking</button>
         </div>
+    
+        <!-- Payment Selection -->
+        <div id="payment-section" style="display: none;">
+            <h2>Select Payment Method</h2>
+            <div class="payment-options">
+                <button onclick="selectPayment('GPay')">
+                    <img src="gpay.png" alt="Google Pay"> GPay
+                </button>
+                <button onclick="selectPayment('Paytm')">
+                    <img src="paytm.png" alt="Paytm"> Paytm
+                </button>
+                <button onclick="selectPayment('Credit Card')">
+                    <img src="creditcard.png" alt="Credit Card"> Credit Card
+                </button>
+                <button onclick="selectPayment('UPI')">
+                    <img src="upi.png" alt="UPI"> UPI
+                </button>
+            </div>
+            <button id="place-order-btn" onclick="placeOrder()" style="display: none;">Place Order</button>
+        </div>
     </section>
+    
 
     <footer>
         <p>&copy; 2025 Taj Mahal Travel Guide</p>
     </footer>
-
-    <script>
-        // Function to open the booking form
+<script>
+    // Function to open the booking form
 function openBookingForm(homestayName, homestayPrice) {
     document.getElementById("selected-homestay").innerText = "Homestay: " + homestayName;
     document.getElementById("homestay-price").innerText = "₹" + homestayPrice;
     document.getElementById("booking-section").style.display = "block";
+    document.getElementById("payment-section").style.display = "none"; // Hide payment section initially
     document.getElementById("checkin-date").value = "";
     document.getElementById("checkout-date").value = "";
     document.getElementById("guests").value = 1;
@@ -132,21 +143,8 @@ function calculateTotalPrice() {
     }
 }
 
-// Function to select a payment method
-let selectedPayment = "";
-
-function selectPayment(method) {
-    selectedPayment = method;
-    alert(method + " selected for payment.");
-}
-
-// Function to confirm booking with payment
+// Function to show payment options after confirming booking
 function confirmBooking() {
-    if (selectedPayment === "") {
-        alert("Please select a payment method before confirming.");
-        return;
-    }
-
     let checkinDate = document.getElementById("checkin-date").value;
     let checkoutDate = document.getElementById("checkout-date").value;
     let totalPrice = document.getElementById("total-price").innerText;
@@ -156,20 +154,34 @@ function confirmBooking() {
         return;
     }
 
-    // Simulate payment gateway process
-    if (selectedPayment === "GPay") {
-        window.open("https://pay.google.com/", "_blank");
-    } else if (selectedPayment === "Paytm") {
-        window.open("https://paytm.com/", "_blank");
-    } else if (selectedPayment === "Credit Card") {
-        window.open("https://www.visa.com/", "_blank");
-    } else if (selectedPayment === "UPI") {
-        alert("Proceeding with UPI payment.");
-    }
-
-    alert("Booking confirmed! Details will be sent to your email.");
+    document.getElementById("payment-section").style.display = "block"; // Show payment options
 }
 
-    </script>
+// Function to select a payment method
+let selectedPayment = "";
+
+function selectPayment(method) {
+    selectedPayment = method;
+    alert(method + " selected for payment.");
+    document.getElementById("place-order-btn").style.display = "block"; // Show "Place Order" button
+}
+
+// Function to place the order and redirect to payment
+function placeOrder() {
+    if (selectedPayment === "") {
+        alert("Please select a payment method before placing your order.");
+        return;
+    }
+
+    // Store booking details in sessionStorage
+    sessionStorage.setItem("homestayName", document.getElementById("selected-homestay").innerText);
+    sessionStorage.setItem("totalPrice", document.getElementById("total-price").innerText);
+    sessionStorage.setItem("selectedPayment", selectedPayment);
+
+    // Redirect to booking confirmation page
+    window.location.href = "booking-confirmation.html";
+}
+
+</script>
 </body>
 </html>
