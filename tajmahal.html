@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taj Mahal - Explore</title>
+    <link rel="stylesheet" href="tajmahal.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1>Taj Mahal, Agra</h1>
+    </header>
+
+    <section class="hero">
+        <img src="tajmahal.jpg" alt="Taj Mahal">
+        <p>Experience the beauty and history of one of the world's greatest wonders!</p>
+    </section>
+
+    <section class="gallery">
+        <h2>Photo Gallery</h2>
+        <div class="image-grid">
+            <img src="taj1.jpg" alt="Taj Mahal View">
+            <img src="taj2.jpg" alt="Taj Mahal Inside">
+            <img src="taj3.jpg" alt="Sunset at Taj Mahal">
+            <img src="taj4.jpg" alt="Reflection of Taj Mahal">
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h2>Watch & Explore</h2>
+        <iframe width="1000" height="400" 
+            src="https://www.youtube.com/embed/7783OO_MtQY" 
+            frameborder="0" allowfullscreen>
+        </iframe>
+    </section>
+
+    <section class="homestay">
+        <h2>Best Homestays Near Taj Mahal</h2>
+        <div class="homestay-grid">
+            <div class="homestay-card">
+                <img src="homestay1.jpg" alt="Agra Luxury Stay">
+                <h3>Agra Luxury Stay</h3>
+                <p>Comfortable stay with Taj Mahal view.</p>
+                <button onclick="openBookingForm('Agra Luxury Stay', 5000)">Book Now</button>
+            </div>
+            <div class="homestay-card">
+                <img src="homestay2.jpg" alt="Heritage Residency">
+                <h3>Heritage Residency</h3>
+                <p>Experience royalty near the Taj Mahal.</p>
+                <button onclick="openBookingForm('Heritage Residency', 6000)">Book Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking-section" class="booking-section" style="display: none;">
+        <h2>Book Your Stay</h2>
+        <div class="booking-details">
+            <h3 id="selected-homestay">Homestay: </h3>
+            <p id="homestay-price"></p>
+
+            <label>Check-in Date:</label>
+            <input type="date" id="checkin-date">
+
+            <label>Check-out Date:</label>
+            <input type="date" id="checkout-date">
+
+            <label>Number of Guests:</label>
+            <input type="number" id="guests" min="1" value="1">
+
+        
+            <h3>Total Nights: <span id="total-nights">0</span></h3>
+            <h3>Total Price: <span id="total-price">₹0</span></h3>
+
+            <h2>Select Payment Method</h2>
+            <div class="payment-options">
+                <button onclick="selectPayment('GPay')">Google Pay</button>
+                <button onclick="selectPayment('Paytm')">Paytm</button>
+                <button onclick="selectPayment('Credit Card')">Credit Card</button>
+                <button onclick="selectPayment('UPI')">UPI</button>
+            </div>
+
+            <button onclick="confirmBooking()">Confirm Booking</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Taj Mahal Travel Guide</p>
+    </footer>
+
+    <script>
+        function openBookingForm(homestayName, homestayPrice) {
+            document.getElementById("selected-homestay").innerText = "Homestay: " + homestayName;
+            document.getElementById("homestay-price").innerText = "₹" + homestayPrice;
+            document.getElementById("booking-section").style.display = "block";
+            document.getElementById("checkin-date").value = "";
+            document.getElementById("checkout-date").value = "";
+            document.getElementById("guests").value = 1;
+            document.getElementById("booking-type").value = "0";
+
+            // Store base price
+            document.getElementById("booking-section").dataset.price = homestayPrice;
+        }
+
+        function calculateTotal() {
+            let checkin = new Date(document.getElementById("checkin-date").value);
+            let checkout = new Date(document.getElementById("checkout-date").value);
+            let guests = parseInt(document.getElementById("guests").value);
+            let basePrice = parseInt(document.getElementById("booking-section").dataset.price);
+            let bookingTypePrice = parseInt(document.getElementById("booking-type").value);
+
+            if (checkin && checkout && checkin < checkout) {
+                let nights = Math.round((checkout - checkin) / (1000 * 60 * 60 * 24));
+                let totalPrice = (basePrice * nights) + (bookingTypePrice * nights) + (guests * 500); 
+
+                document.getElementById("total-nights").innerText = nights;
+                document.getElementById("total-price").innerText = "₹" + totalPrice;
+            } else {
+                document.getElementById("total-nights").innerText = "0";
+                document.getElementById("total-price").innerText = "₹0";
+            }
+        }
+
+        function confirmBooking() {
+            alert("Booking confirmed! Details will be sent to your email.");
+        }
+
+        document.getElementById("checkin-date").addEventListener("change", calculateTotal);
+        document.getElementById("checkout-date").addEventListener("change", calculateTotal);
+        document.getElementById("guests").addEventListener("input", calculateTotal);
+        document.getElementById("booking-type").addEventListener("change", calculateTotal);
+    </script>
+</body>
+</html>
