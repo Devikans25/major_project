@@ -90,46 +90,86 @@
     </footer>
 
     <script>
-        function openBookingForm(homestayName, homestayPrice) {
-            document.getElementById("selected-homestay").innerText = "Homestay: " + homestayName;
-            document.getElementById("homestay-price").innerText = "₹" + homestayPrice;
-            document.getElementById("booking-section").style.display = "block";
-            document.getElementById("checkin-date").value = "";
-            document.getElementById("checkout-date").value = "";
-            document.getElementById("guests").value = 1;
-            document.getElementById("booking-type").value = "0";
+        // Function to open the booking form
+function openBookingForm(homestayName, homestayPrice) {
+    document.getElementById("selected-homestay").innerText = "Homestay: " + homestayName;
+    document.getElementById("homestay-price").innerText = "₹" + homestayPrice;
+    document.getElementById("booking-section").style.display = "block";
+    document.getElementById("checkin-date").value = "";
+    document.getElementById("checkout-date").value = "";
+    document.getElementById("guests").value = 1;
+    document.getElementById("total-nights").innerText = "0";
+    document.getElementById("total-price").innerText = "₹0";
+}
 
-            // Store base price
-            document.getElementById("booking-section").dataset.price = homestayPrice;
-        }
+// Function to calculate total price
+document.getElementById("checkout-date").addEventListener("change", calculateTotalPrice);
+document.getElementById("checkin-date").addEventListener("change", calculateTotalPrice);
+document.getElementById("guests").addEventListener("input", calculateTotalPrice);
 
-        function calculateTotal() {
-            let checkin = new Date(document.getElementById("checkin-date").value);
-            let checkout = new Date(document.getElementById("checkout-date").value);
-            let guests = parseInt(document.getElementById("guests").value);
-            let basePrice = parseInt(document.getElementById("booking-section").dataset.price);
-            let bookingTypePrice = parseInt(document.getElementById("booking-type").value);
+function calculateTotalPrice() {
+    let checkinDate = new Date(document.getElementById("checkin-date").value);
+    let checkoutDate = new Date(document.getElementById("checkout-date").value);
+    let guests = parseInt(document.getElementById("guests").value);
+    let homestayPrice = parseInt(document.getElementById("homestay-price").innerText.replace("₹", ""));
 
-            if (checkin && checkout && checkin < checkout) {
-                let nights = Math.round((checkout - checkin) / (1000 * 60 * 60 * 24));
-                let totalPrice = (basePrice * nights) + (bookingTypePrice * nights) + (guests * 500); 
+    if (isNaN(homestayPrice) || checkinDate == "Invalid Date" || checkoutDate == "Invalid Date") {
+        document.getElementById("total-nights").innerText = "0";
+        document.getElementById("total-price").innerText = "₹0";
+        return;
+    }
 
-                document.getElementById("total-nights").innerText = nights;
-                document.getElementById("total-price").innerText = "₹" + totalPrice;
-            } else {
-                document.getElementById("total-nights").innerText = "0";
-                document.getElementById("total-price").innerText = "₹0";
-            }
-        }
+    let timeDiff = checkoutDate - checkinDate;
+    let totalNights = timeDiff / (1000 * 3600 * 24);
 
-        function confirmBooking() {
-            alert("Booking confirmed! Details will be sent to your email.");
-        }
+    if (totalNights > 0) {
+        document.getElementById("total-nights").innerText = totalNights;
+        let totalPrice = totalNights * homestayPrice * guests;
+        document.getElementById("total-price").innerText = "₹" + totalPrice;
+    } else {
+        document.getElementById("total-nights").innerText = "0";
+        document.getElementById("total-price").innerText = "₹0";
+    }
+}
 
-        document.getElementById("checkin-date").addEventListener("change", calculateTotal);
-        document.getElementById("checkout-date").addEventListener("change", calculateTotal);
-        document.getElementById("guests").addEventListener("input", calculateTotal);
-        document.getElementById("booking-type").addEventListener("change", calculateTotal);
+// Function to select a payment method
+let selectedPayment = "";
+
+function selectPayment(method) {
+    selectedPayment = method;
+    alert(method + " selected for payment.");
+}
+
+// Function to confirm booking with payment
+function confirmBooking() {
+    if (selectedPayment === "") {
+        alert("Please select a payment method before confirming.");
+        return;
+    }
+
+    let checkinDate = document.getElementById("checkin-date").value;
+    let checkoutDate = document.getElementById("checkout-date").value;
+    let totalPrice = document.getElementById("total-price").innerText;
+
+    if (!checkinDate || !checkoutDate || totalPrice === "₹0") {
+        alert("Please enter valid booking details.");
+        return;
+    }
+
+    // Simulate payment gateway process
+    if (selectedPayment === "GPay") {
+        window.open("https://pay.google.com/", "_blank");
+    } else if (selectedPayment === "Paytm") {
+        window.open("https://paytm.com/", "_blank");
+    } else if (selectedPayment === "Credit Card") {
+        window.open("https://www.visa.com/", "_blank");
+    } else if (selectedPayment === "UPI") {
+        alert("Proceeding with UPI payment.");
+    }
+
+    alert("Booking confirmed! Details will be sent to your email.");
+}
+
     </script>
 </body>
 </html>
