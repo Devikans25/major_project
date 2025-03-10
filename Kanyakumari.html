@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanyakumari, Tamil Nadu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .hero {
+            background: url('kanyakumari1.jpg') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+        .intro {
+            padding: 20px;
+            font-size: 18px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .places-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .place-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 15px;
+            text-align: center;
+            max-width: 300px;
+            transition: transform 0.3s ease;
+        }
+        .place-card:hover {
+            transform: scale(1.05);
+        }
+        .place-card img {
+            width: 100%;
+            border-radius: 10px;
+            height: 180px;
+            object-fit: cover;
+        }
+        .place-card h3 {
+            color: #00796b;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .place-card p {
+            font-size: 14px;
+            color: #555;
+        }
+        .back-btn {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #ff5722;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .back-btn:hover {
+            background: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">Welcome to Kanyakumari 🌊☀️</div>
+    <div class="intro">
+        <p>Kanyakumari, the southernmost tip of India, is famous for its breathtaking beaches, the iconic Vivekananda Rock Memorial, and its mesmerizing sunrise and sunset views. A place where the Arabian Sea, Bay of Bengal, and Indian Ocean meet.</p>
+    </div>
+    <div class="places-gallery">
+        <div class="place-card">
+            <img src="vivekananda-rock.jpg" alt="Vivekananda Rock Memorial">
+            <h3>Vivekananda Rock Memorial</h3>
+            <p>A spiritual site dedicated to Swami Vivekananda, offering stunning sea views.</p>
+        </div>
+        <div class="place-card">
+            <img src="thiruvalluvar-statue.jpg" alt="Thiruvalluvar Statue">
+            <h3>Thiruvalluvar Statue</h3>
+            <p>A towering 133-feet statue honoring the famous Tamil poet and philosopher.</p>
+        </div>
+        <div class="place-card">
+            <img src="kanyakumari-beach.jpg" alt="Kanyakumari Beach">
+            <h3>Kanyakumari Beach</h3>
+            <p>Famous for its spectacular sunrise and sunset views over the ocean.</p>
+        </div>
+        <div class="place-card">
+            <img src="padmanabhapuram-palace.jpg" alt="Padmanabhapuram Palace">
+            <h3>Padmanabhapuram Palace</h3>
+            <p>An ancient wooden palace showcasing Kerala's traditional architecture.</p>
+        </div>
+    </div>
+    <a href="index.html" class="back-btn">⬅ Back to Main Page</a>
+</body>
+</html>
