@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Kerala - God's Own Country</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('kerala1.jpg');
+            background-size: cover;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('kerala-backwaters.jpg') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Intro Section */
+        .intro {
+            text-align: center;
+            padding: 30px;
+            font-size: 18px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* Destination Gallery */
+        .destination-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 15px;
+            text-align: center;
+            max-width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+
+        .destination-card img {
+            width: 100%;
+            border-radius: 10px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .destination-card h3 {
+            color: #00897b;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .destination-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .destination-card button {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .destination-card button:hover {
+            background-color: #005f56;
+        }
+
+
+        /* Back Button */
+        .back-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #ff5722;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            background-color: #e64a19;
+        }
+
+        /* Houseboat List Section */
+        .houseboat-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        /* Houseboat Card */
+        .houseboat-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            max-width: 300px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .houseboat-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Houseboat Images */
+        .houseboat-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Titles & Text */
+        .houseboat-card h3 {
+            font-size: 22px;
+            color: #007b5e;
+            margin: 15px 0;
+        }
+
+        .houseboat-card p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Booking Button */
+        .houseboat-card button {
+            background: #ff8000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .houseboat-card button:hover {
+            background: #e67300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .houseboat-list {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .houseboat-card {
+                width: 90%;
+            }
+        }
+
+        /* Modal Background */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Modal Content Box */
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Close Button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        /* Form Labels */
+        .modal-content label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Input Fields & Dropdown */
+        .modal-content input,
+        .modal-content select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Houseboat Type Field */
+        #selectedBoat {
+            background: #f4f4f4;
+            cursor: not-allowed;
+        }
+
+        /* Confirm Booking Button */
+        .modal-content button {
+            background: #00796b;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 15px;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background: #005f56;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Modal */
+        @media (max-width: 500px) {
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        Welcome to Kerala - God's Own Country 🌿✨
+    </div>
+
+    <!-- Introduction -->
+    <div class="intro">
+        <p>Kerala, located in the southern part of India, is a paradise known for its breathtaking backwaters, serene beaches, lush green tea plantations, and rich cultural heritage. Whether you want to explore the tranquil houseboats, enjoy the traditional Kathakali dance, or indulge in mouth-watering cuisine, Kerala has something for everyone!</p>
+    </div>
+
+    <!-- Destination Gallery -->
+    <div class="destination-gallery">
+        <div class="destination-card">
+            <img src="alleppey.jpg" alt="Alleppey">
+            <h3>Alleppey Backwaters</h3>
+            <p>Enjoy a houseboat ride through the serene backwaters of Alleppey.</p>
+        </div>
+
+        <div class="destination-card">
+            <img src="munnar.jpg" alt="Munnar">
+            <h3>Munnar Tea Gardens</h3>
+            <p>Walk through lush green tea plantations in the hills of Munnar.</p>
+        </div>
+
+        <div class="destination-card">
+            <img src="kovalam.jpg" alt="Kovalam Beach">
+            <h3>Kovalam Beach</h3>
+            <p>Relax on the golden sands and watch the sunset at Kovalam Beach.</p>
+        </div>
+
+        <div class="destination-card">
+            <img src="padmanabhaswamy.jpg" alt="Padmanabhaswamy Temple">
+            <h3>Padmanabhaswamy Temple</h3>
+            <p>Visit one of the richest temples in the world with stunning architecture.</p>
+        </div>
+    </div>
+
+    <section class="houseboat-list">
+        <div class="houseboat-card">
+            <h3>Luxury Houseboat</h3>
+            <p>Enjoy a premium experience with top-notch amenities.</p>
+            <button onclick="openBooking('Luxury Houseboat')">Book Now</button>
+        </div>
+
+        <div class="houseboat-card">
+            <h3>Deluxe Houseboat</h3>
+            <p>A perfect blend of comfort and affordability.</p>
+            <button onclick="openBooking('Deluxe Houseboat')">Book Now</button>
+        </div>
+
+        <div class="houseboat-card">
+            <h3>Family Houseboat</h3>
+            <p>Spacious and ideal for a memorable family vacation.</p>
+            <button onclick="openBooking('Family Houseboat')">Book Now</button>
+        </div>
+    </section>
+
+    <!--Luxury Booking-->
+    <div id="bookingForm" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeBooking()">&times;</span>
+            <h2>Book Your Houseboat</h2>
+    
+            <label for="selectedBoat">Houseboat Type:</label>
+            <input type="text" id="selectedBoat" readonly>
+    
+            <label for="guestName">Full Name:</label>
+            <input type="text" id="guestName" placeholder="Enter your name" required>
+    
+            <label for="guestEmail">Email:</label>
+            <input type="email" id="guestEmail" placeholder="Enter your email" required>
+    
+            <label for="checkIn">Check-in Date:</label>
+            <input type="date" id="checkIn" required>
+
+            <label for="checkIn">Check-out Date:</label>
+            <input type="date" id="Check-out" required>
+
+            <label for="package">Packages</label>
+            <select id="package">
+                <option value="">₹12000</option>
+                <option value="">₹15000</option>
+                <option value="">₹20000</option>
+                <option value="">₹25000</option>
+                <option value="">₹50000</option>
+                <option value="">₹30000</option>
+            </select>
+    
+            <label for="guests">Number of Guests:</label>
+            <input type="number" id="guests" min="1" placeholder="Number of guests" required>
+    
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod">
+                <option value="UPI">UPI</option>
+                <option value="Credit Card">Credit/Debit Card</option>
+                <option value="Net Banking">Net Banking</option>
+            </select>
+    
+            <button onclick="confirmBooking()">Confirm Booking</button>
+        </div>
+    </div>
+    
+
+    <script>
+        function openBooking(boatType) {
+            document.getElementById("bookingForm").style.display = "block";
+            document.getElementById("selectedBoat").value = boatType; 
+        }
+    
+        function closeBooking() {
+            document.getElementById("bookingForm").style.display = "none";
+        }
+    
+        function confirmBooking() {
+            let guestName = document.getElementById("guestName").value;
+            let guestEmail = document.getElementById("guestEmail").value;
+            let checkIn = document.getElementById("checkIn").value;
+            let guests = document.getElementById("guests").value;
+            let paymentMethod = document.getElementById("paymentMethod").value;
+            let boatType = document.getElementById("selectedBoat").value;
+    
+            if (!guestName || !guestEmail || !checkIn || !guests) {
+                alert("Please fill all the details!");
+                return;
+            }
+    
+            alert(`Booking Confirmed!\nHouseboat: ${boatType}\nGuest: ${guestName}\nCheck-in: ${checkIn}\nGuests: ${guests}\nPayment: ${paymentMethod}`);
+            
+            closeBooking();
+        }
+    </script>
+    
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">⬅ Back to Main Page</a>
+
+</body>
+</html>
