@@ -135,6 +135,34 @@ body {
     background: #1E3C72;
 }
 
+.suggestion-box {
+    position: absolute;
+    top: 100%;  /* Positions it right below the input */
+    justify-content: center;
+    width: 25%; /* Matches the input width */
+    background: #fff;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* Hidden by default */
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    height: 100%;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.suggestion-item:hover {
+    background: #f0f0f0;
+}
+
+
 /* Features Section */
 .features {
     padding: 60px 20px;
